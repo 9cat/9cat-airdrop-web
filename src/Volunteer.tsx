@@ -8,6 +8,7 @@ import { aWSBAirDropABI } from "./ABI/airdrop.json";
 import { EIP20 } from "./ABI/eip-20.json";
 import { Fairy } from "./ABI/fairy-airdrop.json";
 import {
+  HSC_MAINNET_ID,
   BSC_MAINNET_ID,
   BSC_TESTNET_ID,
   AWSB_TOKEN_ADDRESS,
@@ -156,7 +157,7 @@ function Volunteer() {
     setConnecting(true);
     const getNetWork = async () => {
       chainId = (await ethersProvider.getNetwork()).chainId;
-      if (chainId !== BSC_MAINNET_ID) {
+      if (chainId !== HSC_MAINNET_ID) {
         setErrorNetWork(true);
         setAddress("");
       }
@@ -288,7 +289,7 @@ function Volunteer() {
         )}
         <div className="airdrop">
           <div className="title">
-            <span style={{ fontWeight: 900 }}>aWSB</span>
+            <span style={{ fontWeight: 900 }}>9CAT</span>
             <span style={{ fontWeight: 300, marginLeft: "10px" }}>
               AirDrop Event
             </span>
@@ -327,7 +328,7 @@ function Volunteer() {
               {address
                 ? formatAddress(String(address))
                 : errorNetWork && !connecting
-                ? "BSC Only !   Please Switch NetWork."
+                ? "HSC Only !   Please Switch NetWork."
                 : connecting
                 ? ""
                 : !noWallet
@@ -339,7 +340,7 @@ function Volunteer() {
                 <div className="key token-balance">
                   Balance:{" "}
                   <span style={{ fontWeight: 600, marginLeft: 10 }}>
-                    {aWSBTokenBalance} aWSB
+                    {aWSBTokenBalance} 9CAT
                   </span>
                 </div>
                 <div className="token-info">
@@ -362,7 +363,7 @@ function Volunteer() {
                 <div className="key claimed-balance">
                   To be claimed:{" "}
                   <span style={{ fontWeight: 600, marginLeft: 10 }}>
-                    {isFairyEvent ? fairyClaimBalance : claimBalance} aWSB
+                    {isFairyEvent ? fairyClaimBalance : claimBalance} 9CAT
                   </span>
                 </div>
                 <div className="key">
@@ -411,7 +412,7 @@ function Volunteer() {
             >
               {noWallet
                 ? "Please Install MetaMask."
-                : "Please Switch NetWork to BSC."}
+                : "Please Switch NetWork to HSC."}
             </button>
           ) : (
             <button

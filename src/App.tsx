@@ -8,6 +8,7 @@ import { aWSBAirDropABI } from "./ABI/airdrop.json";
 import { EIP20 } from "./ABI/eip-20.json";
 import { Fairy } from "./ABI/fairy-airdrop.json";
 import {
+  HSC_MAINNET_ID,
   BSC_MAINNET_ID,
   BSC_TESTNET_ID,
   AWSB_TOKEN_ADDRESS,
@@ -21,6 +22,7 @@ import {
 import airdrop from "./assets/airdrop-mini.png";
 import success from "./assets/success-mini.png";
 import binanceLogo from "./assets/binance-logo.png";
+import hscLogo from "./assets/hsc-logo.png";
 import metamask from "./assets/metamask.png";
 import "./App.less";
 
@@ -156,7 +158,7 @@ function App() {
     setConnecting(true);
     const getNetWork = async () => {
       chainId = (await ethersProvider.getNetwork()).chainId;
-      if (chainId !== BSC_MAINNET_ID) {
+      if (chainId !== HSC_MAINNET_ID) {
         setErrorNetWork(true);
         setAddress("");
       }
@@ -196,31 +198,32 @@ function App() {
       let claimBalance: ethers.BigNumber = await aWSBAirDropContract.claimWhitelist(
         walletAccounts[0]
       );
-      let fairyStatus: boolean = await FairyAirDropContract.containsFairy(
-        walletAccounts[0]
-      );
-      if (fairyStatus) {
-        let nextReleasedTime: ethers.BigNumber = await FairyAirDropContract.nextReleasedTime();
-        console.log(
-          "🚀 ~ file: App.tsx ~ line 202 ~ getAirdropInfos ~ nextReleasedTime",
-          nextReleasedTime.toNumber()
-        );
-        let fairyBalance: ethers.BigNumber = await FairyAirDropContract.fairyVault(
-          walletAccounts[0]
-        );
-        setFairyNextReleasedTime(nextReleasedTime.toNumber());
-        setFairyClaimBalance(
-          new BigNumber(fairyBalance.toString())
-            .div(1e18)
-            .toFixed(4)
-            .toString()
-        );
-      }
-      setIsFairy(fairyStatus);
-      console.log(
-        "🚀 ~ file: App.tsx ~ line 196 ~ getAirdropInfos ~ fairyStatus",
-        fairyStatus
-      );
+      // let fairyStatus: boolean = await FairyAirDropContract.containsFairy(
+      //   walletAccounts[0]
+      // );
+      // if (fairyStatus) {
+      //   let nextReleasedTime: ethers.BigNumber = await FairyAirDropContract.nextReleasedTime();
+      //   console.log(
+      //     "🚀 ~ file: App.tsx ~ line 202 ~ getAirdropInfos ~ nextReleasedTime",
+      //     nextReleasedTime.toNumber()
+      //   );
+      //   let fairyBalance: ethers.BigNumber = await FairyAirDropContract.fairyVault(
+      //     walletAccounts[0]
+      //   );
+      //   setFairyNextReleasedTime(nextReleasedTime.toNumber());
+      //   setFairyClaimBalance(
+      //     new BigNumber(fairyBalance.toString())
+      //       .div(1e18)
+      //       .toFixed(4)
+      //       .toString()
+      //   );
+      // }
+      // setIsFairy(fairyStatus);
+      // console.log(
+      //   "🚀 ~ file: App.tsx ~ line 196 ~ getAirdropInfos ~ fairyStatus",
+      //   fairyStatus
+      // );
+      
       setExpiredTime(expiredTime.toNumber());
       setaWSBTokenBalance(
         new BigNumber(aWSBTokenBalance.toString())
@@ -294,7 +297,7 @@ function App() {
         )}
         <div className="airdrop">
           <div className="title">
-            <span style={{ fontWeight: 900 }}>aWSB</span>
+            <span style={{ fontWeight: 900 }}>9CAT</span>
             <span style={{ fontWeight: 300, marginLeft: "10px" }}>
               AirDrop Event
             </span>
@@ -333,7 +336,7 @@ function App() {
               {address
                 ? formatAddress(String(address))
                 : errorNetWork && !connecting
-                ? "BSC Only !   Please Switch NetWork."
+                ? "HSC Only !   Please Switch NetWork."
                 : connecting
                 ? ""
                 : !noWallet
@@ -345,14 +348,14 @@ function App() {
                 <div className="key token-balance">
                   Balance:{" "}
                   <span style={{ fontWeight: 600, marginLeft: 10 }}>
-                    {aWSBTokenBalance} aWSB
+                    {aWSBTokenBalance} 9CAT
                   </span>
                 </div>
                 <div className="token-info">
                   <div className="bsc-info">
-                    <img className="binance-logo" src={binanceLogo} alt="" />
+                    <img className="binance-logo" src={hscLogo} alt="" />
                     <div className="bsc-address">
-                      BSC:{" "}
+                      HSC:{" "}
                       <span style={{ fontWeight: 600, marginLeft: 10 }}>
                         {formatAddress(aWSBTokenInfo.tokenAddress)}
                       </span>
@@ -368,7 +371,7 @@ function App() {
                 <div className="key claimed-balance">
                   To be claimed:{" "}
                   <span style={{ fontWeight: 600, marginLeft: 10 }}>
-                    {isFairyEvent ? fairyClaimBalance : claimBalance} aWSB
+                    {isFairyEvent ? fairyClaimBalance : claimBalance} 9CAT
                   </span>
                 </div>
                 <div className="key">
@@ -417,7 +420,7 @@ function App() {
             >
               {noWallet
                 ? "Please Install MetaMask."
-                : "Please Switch NetWork to BSC."}
+                : "Please Switch NetWork to HSC."}
             </button>
           ) : (
             <button
